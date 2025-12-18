@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main()
+int y()
 {
-    printf("hellworld");
+    int n=4;
     
     return 0;
 }

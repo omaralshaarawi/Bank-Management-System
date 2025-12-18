@@ -1,9 +1,10 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include "sh3ro.c"
 
 int main()
 {
-    printf("hellworld");
+    int n=5;
+    printf("%d",n);
     
     return 0;
 }
