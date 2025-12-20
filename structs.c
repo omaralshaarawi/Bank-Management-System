@@ -12,5 +12,5 @@ typedef struct
     float balance;
     int mobile_number;
     char email[100];
- 
+    char status[100];
 }customer;
