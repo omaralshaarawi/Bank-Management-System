@@ -13,4 +13,5 @@ typedef struct
     int mobile_number;
     char email[100];
     char status[100];
+
 }customer;
