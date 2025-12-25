@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "structs.h"
+#include "bankaccount.c"
 #include "save.c"
 #include "login.c"
 #include "quit.c"
@@ -35,7 +36,6 @@ int main()
    
     while (1)
     {
-    
     customer customerss[] = {
     {9700000000, "Michael Jones", "m.jones@gmail.com", 1000, "01009700000", {12, 2007}, "active"},
     {9700000001, "John Roberto", "j.roberto@outlook.com", 100, "01009700001", {12, 2008}, "active"},
@@ -48,6 +48,8 @@ int main()
     {9700000008, "Adam Mark", "ad.mark@gmail.com", 350, "01009700008", {10, 2015}, "inactive"},
     {9700000009, "James Adams", "j.adams@gmail.com", 250, "01009700009", {5, 2017}, "active"}
     };
+    add_account();
+    add_account();
     printf("please enter the function you want to perform :\n1- ADD Account\n2- Delete Account\n3- Modify Account information \n4- Search \n5- Advanced search\n6- Change status\n7- Withdrawl\n 8- Deposit\n9- Transfer amount\n10- Report\n11- Print\n12- Quit");
 
     int choice;
@@ -99,4 +101,4 @@ int main()
 
     
     return 0;
-}
+ }

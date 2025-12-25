@@ -26,7 +26,7 @@ void save(customer e,int new)
     strcpy(customers[n].active,e.active);
     strcpy(customers[n].mobile_number,e.mobile_number);
     if(new==1)
-    printf("The account has been saved successfully");   
+    printf("The account has been saved successfully\n");  
     FILE *fptr;
     char acc_number[50];
     sprintf(acc_number,"%lld.txt",e.account_number);
