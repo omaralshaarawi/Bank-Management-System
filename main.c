@@ -31,7 +31,7 @@ int main()
         }
     }
 
-   
+   load();
    
     while (1)
     {
