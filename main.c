@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "structs.h"
-#include "save.c"
+#include "bankaccount.c"
 customer customers[10007];
 int n;
 int main()
@@ -17,6 +17,7 @@ int main()
     {9700000008, "Adam Mark", "ad.mark@gmail.com", 350, "01009700008", {10, 2015}, "inactive"},
     {9700000009, "James Adams", "j.adams@gmail.com", 250, "01009700009", {5, 2017}, "active"}
 };
-    save(customerss[1],1);
+    add_account();
+    add_account();
     return 0;
 }
