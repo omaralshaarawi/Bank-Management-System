@@ -30,7 +30,7 @@ void save(customer e,int new)
     FILE *fptr;
     char acc_number[50];
     sprintf(acc_number,"%lld.txt",e.account_number);
-    fptr = fopen(acc_number, "w");
+    fptr = fopen(acc_number, "a+");
     if(fptr==NULL)
     {
         perror("The account number file wasn't made");

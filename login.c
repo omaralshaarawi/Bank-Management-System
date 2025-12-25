@@ -12,13 +12,12 @@ int login() {
     FILE *fp = fopen("users.txt", "r");
     if (!fp) {
         perror("File open failed");
-        return;
+        return 0;
     }
 
     char word[256];  
 
 while (fscanf(fp, "%99s", word) == 1) {
-        printf("%s\n", word);
         if(strcmp(word, username) == 0) {
             fscanf(fp, "%99s", word);
             if(strcmp(word, password) == 0)

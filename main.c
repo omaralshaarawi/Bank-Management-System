@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include "structs.h"
 #include "bankaccount.c"
-#include "save.c"
 #include "login.c"
 #include "quit.c"
+#include "load.c"
+#include "prints.c"
 customer customers[10007];
 int n;
 int main()
@@ -48,16 +49,15 @@ int main()
     {9700000008, "Adam Mark", "ad.mark@gmail.com", 350, "01009700008", {10, 2015}, "inactive"},
     {9700000009, "James Adams", "j.adams@gmail.com", 250, "01009700009", {5, 2017}, "active"}
     };
-    add_account();
-    add_account();
-    printf("please enter the function you want to perform :\n1- ADD Account\n2- Delete Account\n3- Modify Account information \n4- Search \n5- Advanced search\n6- Change status\n7- Withdrawl\n 8- Deposit\n9- Transfer amount\n10- Report\n11- Print\n12- Quit");
+
+    printf("please enter the function you want to perform :\n1- ADD Account\n2- Delete Account\n3- Modify Account information \n4- Search \n5- Advanced search\n6- Change status\n7- Withdrawl\n8- Deposit\n9- Transfer amount\n10- Report\n11- Print\n12- Quit\n");
 
     int choice;
     scanf("%d",&choice);
     switch(choice)
     {
         case 1:
-            //add_account();
+            add_account();
             break;
         case 2:
             //delete_account();
@@ -84,10 +84,10 @@ int main()
             //transfer_amount();
             break;
         case 10:
-            //report();
+            report();
             break;
         case 11:
-            //print();
+            print();
             break;
         case 12:
            quit();
