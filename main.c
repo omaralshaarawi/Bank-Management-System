@@ -5,6 +5,8 @@
 #include "quit.c"
 #include "load.c"
 #include "prints.c"
+#include "change_status.c"
+
 customer customers[10007];
 int n;
 int main()
