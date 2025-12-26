@@ -7,21 +7,21 @@ void deposit(){
   long long enteredNum;
   int exist = 0;
   int founded;
-  printf("Enter the bank account number: ");
-  scanf("%lld",&enteredNum);
-   
+  
   //check if the acount exists or not
-
-  for(int i = 0 ; i < n ; i++){
-    if(enteredNum == customers[i].account_number) {
-      exist = 1;
-      founded = i;
-      break;}
+  while(!exist){
+    
+    printf("Enter the bank account number: ");
+    scanf("%lld",&enteredNum);
+      for(int i = 0 ; i < n ; i++){
+        if(enteredNum == customers[i].account_number) {
+          exist = 1;
+          founded = i;
+          break;}
   }
   
-  if(!exist) {
-    printf("This account doesn't exist\n"); 
-    return;
+  if(!exist)  printf("This account doesn't exist try again\n"); 
+          
           }
 
   //check acount status
@@ -45,4 +45,20 @@ void deposit(){
 
   customers[founded].balance += depositAmount;
   printf("Deposit successful! Your current balance: %.2f\n",customers[founded].balance);
+
+ //adding changes to file
+  FILE *fptr;
+char acc_number[50];
+
+  sprintf(acc_number,"%lld.txt",customers[founded].account_number);
+    fptr = fopen(acc_number, "a");
+    if (!fptr) {
+    printf("Error opening file for deposite history.\n");
+    return;
+    }
+
+    fprintf(fptr,"%lld deposit %.2f\n",customers[founded].account_number,depositAmount);
+    
+    fclose(fptr);
+  
 }
