@@ -26,6 +26,7 @@ while(1)
         {
             printf("Please enter a valid bank account number\n");
         }
+        else break;
     }
 //check the two accounts are diffrent
 if(sender == receiver){

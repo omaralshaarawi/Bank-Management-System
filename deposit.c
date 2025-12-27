@@ -44,8 +44,6 @@ while(1)
 
   save(customers[index],0);
 
-  save(customers[founded],0);
-
  //adding changes to file
   FILE *fptr;
 char acc_number[50];

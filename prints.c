@@ -14,6 +14,8 @@ void report()
         }
         else break;
     }
+    printf("-----The Report of %s's lastest Transcations-----\n",customers[x].name);
+    x=customers[x].account_number;
     char acc_number[50];
     sprintf(acc_number,"%lld.txt",x);
     FILE *fptr1;
@@ -29,7 +31,7 @@ void report()
     }
     for(int i=cnt-1;i>((cnt-1-5>-1)?cnt-1-5:-1);i--)
     {
-        printf("%s \n",line[i]);
+        printf("%s",line[i]);
     }
     return;
 
@@ -143,7 +145,7 @@ void print()
 {
     while(1)
     {
-        printf("How would like to print it: \n1-Sorted by Name\n2-Sorted By Date\n3-Sort by Balance\n4-Sort by Status\n-0 Return back to menu\n");
+        printf("How would like to print it: \n1-Sorted by Name\n2-Sorted By Date\n3-Sort by Balance\n4-Sort by Status\n0-Return back to menu\n");
         int x;
         if(scanf("%d",&x))
         {
