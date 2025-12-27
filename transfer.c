@@ -1,46 +1,31 @@
 #include <stdio.h>
 #include <string.h>
 #include "structs.h"
-
+#include "bankaccount.c"
 void transfer() {
-long long senderNum,receiverNum;
-int sender , receiver ,exist =0;
+int sender , receiver ;
 
 
 //check if the sender exists or not
-while(!exist){
-  
-  printf("Enter the sender account number: ");
-  scanf("%lld",&senderNum);
-    for(int i = 0 ; i < n ; i++){
-      if(senderNum == customers[i].account_number) {
-        exist = 1;
-        sender = i;
-        break;}
-  }
-  
-  if(!exist)  printf("The sender doesn't exist try again\n"); 
-          
-      } 
-
-exist = 0;
-
+printf("now checking sender\n");
+while(1)
+    {
+        sender=search_account(1);
+        if(sender==-1)
+        {
+            printf("Please enter a valid bank account number\n");
+        }
+    }
 //check if the receiver exists or not
-while(!exist){
-  
-  printf("Enter the receiver account number: ");
-  scanf("%lld",&receiverNum);
-    for(int i = 0 ; i < n ; i++){
-      if(receiverNum == customers[i].account_number) {
-        exist = 1;
-        receiver = i;
-        break;}
-  }
-  
-  if(!exist)  printf("The receiver doesn't exist try again\n"); 
-
-      }
-
+printf("now checking receiver\n");
+while(1)
+    {
+        receiver=search_account(1);
+        if(receiver==-1)
+        {
+            printf("Please enter a valid bank account number\n");
+        }
+    }
 //check the two accounts are diffrent
 if(sender == receiver){
   printf("Cannot transfer to the same account.\n");
