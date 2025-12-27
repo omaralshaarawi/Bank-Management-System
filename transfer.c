@@ -14,6 +14,8 @@ while(1)
         {
             printf("Please enter a valid bank account number\n");
         }
+        else
+        break;
     }
 //check if the receiver exists or not
 printf("now checking receiver\n");
@@ -24,6 +26,7 @@ while(1)
         {
             printf("Please enter a valid bank account number\n");
         }
+        else break;
     }
 //check the two accounts are diffrent
 if(sender == receiver){
@@ -56,6 +59,12 @@ customers[receiver].balance += transferedAmount;
 printf("Transfer successful!\n");
 printf("The sender balance: %.2f\n",customers[sender].balance);
 printf("The receiver balance: %.2f\n",customers[receiver].balance);
+
+
+  //change the status in accont.txt file
+
+  save(customers[sender],0);
+  save(customers[receiver],0);
 
 //add changes to files
 FILE *fptr;

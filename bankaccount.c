@@ -229,9 +229,6 @@ int Delete_account(int multiple){          //check if he want to delete multiple
             printf("the deletion is rejected because the account contain money\n");
             return -1;
         }
-        for(i=x;i<=n;++i){
-            customers[i]=customers[i+1];
-        }
         --n;
         FILE *fptr;
         char acc_number[50];
@@ -279,11 +276,12 @@ void modify_account(){
         printf("enter your choice: ");
         scanf("%d",&k);
         if(k==1){
+            int flag1=1;
             while (1){
                 flag=1;
                 i=0;
                 printf("enter the New Name: ");
-                getchar();
+                if(flag1==1)flag1=0,getchar();
                 gets(customers[x].name);
                 while (customers[x].name[i]!='\0'){
                     if(!isalpha(customers[x].name[i])&&customers[x].name[i]!=' '){
@@ -321,10 +319,12 @@ void modify_account(){
             return;
         }
         else if(k==3){
+                int flag1=1;
                 while (1)
                 {   
                     i=0;
                     printf("enter New E-mail: ");
+                    if(flag1==1)flag1=0,getchar();
                     gets(customers[x].email);
                     int atpos=-1,counter=0;
                     while (customers[x].email[i]){

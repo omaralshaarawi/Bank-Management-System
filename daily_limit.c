@@ -7,7 +7,7 @@ int dailyLimit(int i , float withdrawAmount) {
   time_t now = time(NULL);
   struct tm *today = localtime(&now);
 
-
+  
   //reset daily withdraw
   if(customers[i].lastwithdraw.year != today->tm_year ||
      customers[i].lastwithdraw.day != today->tm_yday ) { 
