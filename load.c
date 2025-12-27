@@ -50,6 +50,8 @@ void load()
             }
             else if(cnt==6)
             {
+                if(strcmp(token,"active\n")==0)token[6]='\0';
+                if(strcmp(token,"inactive\n")==0)token[8]='\0';
                 strcpy(customers[n].active,token);
                 
             }

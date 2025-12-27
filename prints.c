@@ -12,6 +12,7 @@ void report()
         {
             printf("Please enter a valid bank account number\n");
         }
+        else break;
     }
     char acc_number[50];
     sprintf(acc_number,"%lld.txt",x);

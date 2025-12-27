@@ -37,5 +37,5 @@ void save(customer e,int new)
         for(int i=0;i<=n;++i){
             fprintf(file1,"%lld,%s,%s,%f,%s,%d-%d,%s\n",customers[i].account_number,customers[i].name,customers[i].email,customers[i].balance,customers[i].mobile_number,customers[i].open.month,customers[i].open.year,customers[i].active);
         }
-
+        fclose(file1);
 }
