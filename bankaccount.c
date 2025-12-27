@@ -98,17 +98,18 @@ void add_account(){
     {
         printf("enter you mobile: ");
         scanf("%s",m.mobile_number);
-        i=0;
+        i=0,flag=1;
         while (m.mobile_number[i]){
-           if(!isdigit(m.mobile_number[i])||strlen(m.mobile_number)>11){
+           if(!isdigit(m.mobile_number[i]))
+            {
                 printf("Invaild mobile number please try again:\n");
+                flag=0;
                 break;
             }
             ++i;
         }
-        if(i==11)
+        if(flag)
             break;
-        
     }
     time_t t = time(NULL);         // Get the current time in seconds since the Unix epoch
     struct tm *currentTime = localtime(&t); // Convert to local time components
@@ -217,26 +218,10 @@ void advanced_search(){
 void Delete_account(int c){
     int x,i,k,flag;
     FILE *file1,*file2;
-    printf("you want to confirm the changes:\n1-confirm\n2-cancel\n");
-    while (1)
-    {
-        printf("enter your choice: ");
-        scanf("%d",&flag);
-        if(flag==1)
-            break;
-        else if (flag==2)
-            return;
-        else
-            printf("Wrong choice please try again\n");
-    }
     while(1){
-    if(c==-1)
     x=search_account(1);
-    else
-    x=c;
     if(x>=0){
-        if(c==-1){
-        if(customers[i].balance!=0){
+        if(customers[x].balance!=0){
             printf("the deletion is rejected because the account contain money\n");
             return;
         }
@@ -247,15 +232,17 @@ void Delete_account(int c){
         FILE *fptr;
         char acc_number[50];
         sprintf(acc_number,"%lld.txt",customers[x].account_number);
-        fptr = fopen(acc_number, "w");
-        if(fptr==NULL)
-        {
-            perror("The account number file wasn't found");
+        if(remove(acc_number)!=0){
+            printf("file is not found\n");
             return;
         }
-        fclose(fptr);
-        printf("the deletion is done successfully\n");
-        }       
+        file1=fopen("account.txt","w");
+        for(i=0;i<=n;++i){
+            fprintf(file1,"%lld,%s,%s,%f,%s,%d-%d,%s\n",customers[i].account_number,customers[i].name,customers[i].email,customers[i].balance,customers[i].mobile_number,customers[i].open.month,customers[i].open.year);
+        }
+        save(customers[x],0);
+        printf("the deletion is done successfully");
+        return;
     }
     else{
         printf("------the account number is not found-----\n1-enter another bank account\n2-cancel\n");
@@ -275,6 +262,9 @@ void Delete_account(int c){
 }
 void modify_account(){
     int x,i,k,flag;
+    while (1)
+    {
+    
     x=search_account(1);
     if(x>=0){
         printf("\n----modifiable option----\n");
@@ -300,7 +290,7 @@ void modify_account(){
                 if(flag)
                 break;
             }
-            Delete_account(x);
+            save(customers[x],0);
             return;
         }
         else if(k==2){
@@ -308,19 +298,20 @@ void modify_account(){
                 {
                     printf("enter the New mobile Number: ");
                     scanf("%s",customers[x].mobile_number);
-                    i=0;
+                    i=0,flag=1;
                     while (customers[x].mobile_number[i]){
-                    if(!isdigit(customers[x].mobile_number[i])||strlen(customers[x].mobile_number)>11){
-                    printf("Invaild mobile number please try again:\n");
-                    break;
+                        if(!isdigit(customers[x].mobile_number[i])){
+                        printf("Invaild mobile number please try again\n");
+                        flag=0;
+                        break;
+                        }
+                        ++i;
                     }
-                    ++i;
-                    }
-                if(i==11)
+                if(flag)
                     break;
         
                 }
-            Delete_account(x);
+            save(customers[x],0);
             return;
         }
         else if(k==3){
@@ -349,7 +340,7 @@ void modify_account(){
                     else 
                     break;
                 }
-                Delete_account(x);
+                save(customers[x],0);
                 return;                
     }
     else
@@ -357,5 +348,19 @@ void modify_account(){
     
     }
     }
-    printf("tha Account number is not found");
+    printf("\n-----tha Account number is not found-----\n1-enter another account\n2-exit\n");
+    while (1)
+    {
+        int s;
+        printf("enter your choice: ");
+        scanf("%d",&s);
+        if(s==1)
+            break;
+        else if (s==2)
+            return;
+        else
+            printf("Wrong choice please try again: ");
+        
     }
+    }
+}    
