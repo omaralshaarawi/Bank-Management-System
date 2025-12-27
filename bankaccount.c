@@ -21,17 +21,18 @@ void add_account(){
     if(flag)
         break;
     }
-    i=0;
     while (1)
     {
+        i=0;
         flag=1;
         printf("enter your name: ");
         getchar();
         gets(m.name);
         while (m.name[i]!='\0'){
             if(!isalpha(m.name[i])&&m.name[i]!=' '){
-                printf("it is an invalid name please try again %c%d\n",m.name[i],i);
+                printf("it is an invalid name please try again\n");
                 flag=0;
+                break;
             }
             ++i;
         }
@@ -48,7 +49,6 @@ void add_account(){
         while (m.email[i]){
             if(m.email[i]==' '||counter==2||atpos==0){
                 flag=0;
-                printf("hey %d",i);
                 break;
             }
             if(m.email[i]=='@'){
@@ -108,4 +108,223 @@ void add_account(){
         else
             printf("Wrong choice please try again");
     }
+}
+int search_account(int check){
+    int i,flag,k;
+    long long x;
+    while (1)
+    {
+        flag=1;
+        printf("please entre the account number: ");
+        scanf("%lld",&x);
+        for(i=0;i<=n;++i){
+            if(x==customers[i].account_number){
+                if(check==1)                //to check for another functions that customer is found
+                    return i;
+                flag=0;
+                printf("Account Number: %lld\n",customers[i].account_number);
+                printf("Name: %s\n",customers[i].name);
+                printf("E-mail: %s\n",customers[i].email);
+                printf("Balance: %f\n",customers[i].balance);
+                printf("Mobile: %s\n",customers[i].mobile_number);
+                printf("Date opened: %d-%d\n",customers[i].open.month,customers[i].open.year);
+                printf("Status: %s\n",customers[i].active);
+                return;
+            }
+        }
+        if(check==1)
+            return -1;
+        if (flag)
+        {
+            printf("the account number is not found in the system\n");
+            printf("1-enter another bank account\n2-cancel\n");
+            while (1)
+            {
+                printf("enter your choice: ");
+                scanf("%d",&k);
+                if(k==1)
+                    break;
+                else if(k==2)
+                    return;
+                else
+                    printf("Wrong choice please try again\n");
+            }
+        }
+        
+    }
+}
+void advanced_search(){
+    int i,flag;
+    char k[1000];
+    while (1) 
+    {
+        printf("please enter the keyword: ");
+        scanf("%s",k);
+        for (i=0;i<=n;++i)
+        {
+            if(strstr(customers[i].name,k)){
+                printf("Search Result: \n");
+                printf("\nAccount Number: %lld",customers[i].account_number);
+                printf("Name: %s\n",customers[i].name);
+                printf("E-mail: %s\n",customers[i].email);
+                printf("Balance: %f\n",customers[i].balance);
+                printf("Mobile: %s\n",customers[i].mobile_number);
+                printf("Date opened: %d-%d\n",customers[i].open.month,customers[i].open.year);
+                printf("Status: %s\n",customers[i].active);
+                return;
+            }
+        }
+        printf("Worng keyword\n1-enter another keyword\n2-cancel\n");
+        while (1)
+        {
+            printf("enter your choice : ");
+            scanf("%d",&flag);
+            if(flag==1)
+                break;
+            else if(flag==2)
+                return;
+            else 
+                printf("Wrong choice please try again\n");
+        }
+    }
+}
+void Delete_account(int c){
+    int x,i,k;
+    FILE *file1,*file2;
+    while(1){
+    if(c==-1)
+    x=search_account(1);
+    else
+    x=c;
+    if(x>=0){
+        if(c==-1){
+        if(customers[i].balance!=0){
+            printf("the deletion is rejected because the account contain money\n");
+            return;
+        }
+        for(i=x;i<=n;++i){
+            customers[i]=customers[i+1];
+        }
+        --n;
+        FILE *fptr;
+        char acc_number[50];
+        sprintf(acc_number,"%lld.txt",customers[x].account_number);
+        fptr = fopen(acc_number, "w");
+        if(fptr==NULL)
+        {
+            perror("The account number file wasn't found");
+        }
+        fclose(fptr);
+        printf("the deletion is done successfully\n");
+        }
+        file1=fopen("account.txt","w");
+        for(i=0;i<=n;++i){
+            fprintf(file1,"%lld,%s,%s,%f,%s,%d-%d,%s\n",customers[i].account_number,customers[i].name,customers[i].email,customers[i].balance,customers[i].mobile_number,customers[i].open.month,customers[i].open.year);
+        }
+    }
+    else{
+        printf("------the account number is not found-----\n1-enter another bank account\n2-cancel");
+        while (1)
+        {
+            printf("enter your choice: ");
+            scanf("%d",&k);
+            if(k==1)
+                break;
+            else if (k==2)
+                return;
+            else 
+                printf("Wrong choice please try again\n");
+        }  
+    }
+}
+}
+void modify_account(){
+    int x,i,k,flag;
+    while (1)
+    {
+    x=search_account(1);
+    if(x>=0){
+        printf("\n----modifiable option----\n");
+        printf("1-Name\n2-Mobile Number\n3-E-mail\n");
+        while(1){
+        printf("enter your choice: ");
+        scanf("%d",&k);
+        if(k==1){
+            while (1){
+                flag=1;
+                i=0;
+                printf("enter the New Name: ");
+                getchar();
+                gets(customers[x].name);
+                while (customers[x].name[i]!='\0'){
+                    if(!isalpha(customers[x].name[i])&&customers[x].name[i]!=' '){
+                        printf("it is an invalid name please try again\n");
+                        flag=0;
+                        break;
+                        }
+                    ++i;
+                }
+                if(flag)
+                break;
+            }
+            Delete_account(x);
+            return;
+        }
+        else if(k==2){
+                while (1)
+                {
+                    printf("enter the New mobile Number: ");
+                    scanf("%s",customers[x].mobile_number);
+                    i=0;
+                    while (customers[x].mobile_number[i]){
+                    if(!isdigit(customers[x].mobile_number[i])||strlen(customers[x].mobile_number)>11){
+                    printf("Invaild mobile number please try again:\n");
+                    break;
+                    }
+                    ++i;
+                    }
+                if(i==11)
+                    break;
+        
+                }
+            Delete_account(x);
+            return;
+        }
+        else if(k==3){
+                while (1)
+                {   
+                    i=0;
+                    printf("enter New E-mail: ");
+                    gets(customers[x].email);
+                    int atpos=-1,counter=0;
+                    while (customers[x].email[i]){
+                        if(customers[x].email[i]==' '||counter==2||atpos==0){
+                            flag=0;
+                            break;
+                    }
+                    if(customers[x].email[i]=='@'){
+                        ++counter;
+                        atpos=i;
+                    }
+                    if(i>atpos && customers[x].email[i]=='.'&&customers[x].email[i+1]=='c'&&customers[x].email[i+2]=='o'&&customers[x].email[i+3]=='m')
+                        flag=1;
+
+                    ++i;
+                    }
+                    if(flag!=1)
+                        printf("Invalid E-mail please enter a valid email\n");
+                    else 
+                    break;
+                }
+                Delete_account(x);
+                return;                
+    }
+    else
+        printf("Wrong Choice Please try again\n");
+    
+    }
+    }
+    printf("tha Account number is not found");
+    }
+
 }
