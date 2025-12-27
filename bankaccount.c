@@ -215,15 +215,19 @@ void advanced_search(){
         }
     }
 }
-void Delete_account(int c){
+int Delete_account(int multiple){          //check if he want to delete multiple
     int x,i,k,flag;
     FILE *file1,*file2;
     while(1){
-    x=search_account(1);
+    if(multiple>=0)
+    x=multiple;
+    else 
+        x=search_account(1);
     if(x>=0){
+
         if(customers[x].balance!=0){
             printf("the deletion is rejected because the account contain money\n");
-            return;
+            return -1;
         }
         for(i=x;i<=n;++i){
             customers[i]=customers[i+1];
@@ -234,15 +238,17 @@ void Delete_account(int c){
         sprintf(acc_number,"%lld.txt",customers[x].account_number);
         if(remove(acc_number)!=0){
             printf("file is not found\n");
-            return;
-        }
-        file1=fopen("account.txt","w");
-        for(i=0;i<=n;++i){
-            fprintf(file1,"%lld,%s,%s,%f,%s,%d-%d,%s\n",customers[i].account_number,customers[i].name,customers[i].email,customers[i].balance,customers[i].mobile_number,customers[i].open.month,customers[i].open.year);
+            return -1;
         }
         save(customers[x],0);
-        printf("the deletion is done successfully");
-        return;
+        if(multiple>0)
+            return 0;
+        if (multiple==-1)
+        {
+            printf("the deletion is done successfully");
+            return 0;
+        }
+        
     }
     else{
         printf("------the account number is not found-----\n1-enter another bank account\n2-cancel\n");
@@ -362,5 +368,63 @@ void modify_account(){
             printf("Wrong choice please try again: ");
         
     }
+    }
+}
+void delete_multipile(){
+    int k,i,month,year,flag,cnt;
+    printf("1-Delete by date\n2-Inactive accounts");
+    while ((1))
+    {
+        printf("enter your choice: ");
+        scanf("%d",&k);
+        if(k==1)
+            break;
+        else if (k==2)
+            break;
+        else
+            printf("Wrong choice please try again\n");
+    }
+    if(k==1){
+        flag=0,cnt=0;
+        printf("enter the month of date: ");
+        scanf("%d",&month);
+        printf("enter the year of date: ");
+        scanf("%d",year);
+        for(i=n;i>=0;--i){
+            if(customers[i].open.month==month&&customers[i].open.year==year){
+                    if(Delete_account(i)==-1){
+                        printf("the Account Number of this account is :%lld\n",customers[i].account_number);
+                    }
+                    else{
+                    flag=1;
+                    ++cnt;
+                    }
+            }
+        }
+        if(flag){
+            printf("\n--------the process of deteltion the accounts is completed------\nthe numbers of accounts that deleted is:%d",cnt);
+        }    
+        else
+            printf("there is no account with the same date\n");
+    }
+    if(k==2){
+        time_t t = time(NULL);          //calculate all secondes from 1970
+        struct tm *currentTime = localtime(&t);
+        int current_mon = currentTime->tm_mon + 1;
+        int current_year = currentTime->tm_year + 1900;
+        int cnt = 0;
+        int flag = 0;
+        for(i=n;i>=0;--i){
+            int total_current_months = (current_year * 12) + current_mon;
+            int total_open_months = (customers[i].open.year * 12) + customers[i].open.month;
+            int diff_months = total_current_months - total_open_months;
+            if(customers[i].balance==0&&diff_months>=3){
+                if(Delete_account(i)!=-1){
+                    flag=1;
+                    ++cnt;
+                }
+            }
+
+        }
     }
 }    
