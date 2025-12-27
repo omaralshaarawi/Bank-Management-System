@@ -40,14 +40,18 @@ void load()
             else if(cnt==5)
             {
                 char* token1;
-                token1 = strtok(token,"-");
+                token1 = token;
+                if(token1[1]=='-')token1[1]='\0';
+                else token1[2]='\0';
                 customers[n].open.month=atoi(token1);
-                token1=strtok(NULL,"-");
+                if(token1[1]=='\0')token1+=2;
+                else token1+=3;
                 customers[n].open.year=atoi(token1);
             }
             else if(cnt==6)
             {
                 strcpy(customers[n].active,token);
+                
             }
             cnt++;
             token = strtok(NULL, ",");

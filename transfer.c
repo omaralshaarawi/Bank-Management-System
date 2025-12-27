@@ -2,45 +2,44 @@
 #include <string.h>
 #include "structs.h"
 
-void tranfer() {
+void transfer() {
 long long senderNum,receiverNum;
 int sender , receiver ,exist =0;
 
-//get the sender 
-printf("Enter the sender account number: ");
-scanf("%lld",&senderNum);
-//check if the sender exists or not
 
-  for(int i = 0 ; i < n ; i++){
-    if(senderNum == customers[i].account_number) {
-      exist = 1;
-      sender = i;
-      break;}
+//check if the sender exists or not
+while(!exist){
+  
+  printf("Enter the sender account number: ");
+  scanf("%lld",&senderNum);
+    for(int i = 0 ; i < n ; i++){
+      if(senderNum == customers[i].account_number) {
+        exist = 1;
+        sender = i;
+        break;}
   }
   
-  if(!exist) {
-    printf("The sender doesn't exist\n"); 
-    return;
-          }
+  if(!exist)  printf("The sender doesn't exist try again\n"); 
+          
+      } 
 
-//get the receiver
 exist = 0;
-printf("Enter the receiver account number: ");
-scanf("%lld",&receiverNum);
 
 //check if the receiver exists or not
-
-  for(int i = 0 ; i < n ; i++){
-    if(receiverNum == customers[i].account_number) {
-      exist = 1;
-      receiver = i;
-      break;}
+while(!exist){
+  
+  printf("Enter the receiver account number: ");
+  scanf("%lld",&receiverNum);
+    for(int i = 0 ; i < n ; i++){
+      if(receiverNum == customers[i].account_number) {
+        exist = 1;
+        receiver = i;
+        break;}
   }
   
-  if(!exist) {
-    printf("The receiver doesn't exist\n"); 
-    return;
-          }
+  if(!exist)  printf("The receiver doesn't exist try again\n"); 
+
+      }
 
 //check the two accounts are diffrent
 if(sender == receiver){
@@ -73,4 +72,31 @@ customers[receiver].balance += transferedAmount;
 printf("Transfer successful!\n");
 printf("The sender balance: %.2f\n",customers[sender].balance);
 printf("The receiver balance: %.2f\n",customers[receiver].balance);
+
+//add changes to files
+FILE *fptr;
+char acc_number[50];
+//sender
+sprintf(acc_number,"%lld.txt",customers[sender].account_number);
+    fptr = fopen(acc_number, "a");
+    if (!fptr) {
+    printf("Error opening file for sender history.\n");
+    return;
+    }
+
+    fprintf(fptr,"%lld sent %.2f to %lld\n",customers[sender].account_number,transferedAmount,customers[receiver].account_number);
+    fclose(fptr);
+    
+//receiver
+sprintf(acc_number,"%lld.txt",customers[receiver].account_number);
+    fptr = fopen(acc_number, "a");
+    if (!fptr) {
+    printf("Error opening file for receiver history.\n");
+    return;
+    }
+
+    fprintf(fptr,"%lld received %.2f from %lld\n",customers[receiver].account_number,transferedAmount,customers[sender].account_number);
+    
+    fclose(fptr);
+    
 }
