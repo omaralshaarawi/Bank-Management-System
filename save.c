@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "structs.h"
-
-
 void save(customer e,int new)
 {
     if(new==0)
