@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-int login() {
+int login()
+{
     char username[20];
     char password[20];
 
@@ -10,23 +11,30 @@ int login() {
     scanf("%s", password);
 
     FILE *fp = fopen("users.txt", "r");
-    if (!fp) {
+    if (!fp)
+    {
         perror("File open failed");
         return 0;
     }
 
-    char word[256];  
+    char word[256];
 
-while (fscanf(fp, "%99s", word) == 1) {
-        if(strcmp(word, username) == 0) {
+    while (fscanf(fp, "%99s", word) == 1)
+    {
+        if (strcmp(word, username) == 0)
+        {
             fscanf(fp, "%99s", word);
-            if(strcmp(word, password) == 0)
-            printf("Login successful!\n");
-            fclose(fp);
-            return 1;
+            if (strcmp(word, password) == 0)
+            {
+                printf("Login successful!\n");
+                fclose(fp);
+                return 1;
+            }
         }
-    } printf("Login failed! Invalid username or password.\n"); 
-    fclose(fp); 
-    return 0;   
+        else
+            fscanf(fp, "%99s", word);
+    }
+    printf("Login failed! Invalid username or password.\n");
+    fclose(fp);
+    return 0;
 }
-
