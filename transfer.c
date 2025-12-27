@@ -58,6 +58,12 @@ printf("Transfer successful!\n");
 printf("The sender balance: %.2f\n",customers[sender].balance);
 printf("The receiver balance: %.2f\n",customers[receiver].balance);
 
+
+  //change the status in accont.txt file
+
+  save(customers[sender],0);
+  save(customers[receiver],0);
+
 //add changes to files
 FILE *fptr;
 char acc_number[50];
