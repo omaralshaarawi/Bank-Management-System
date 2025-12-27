@@ -2,7 +2,6 @@
 #include <string.h>
 #include "structs.h"
 #include "daily_limit.c"
-#include "bankaccount.c"
 void withdraw() {
   long long enteredNum;
   int exist = 0;

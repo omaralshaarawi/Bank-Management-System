@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "structs.h"
-#include "save.c"
 
 void changeStatus() {
   long long enteredNum;
