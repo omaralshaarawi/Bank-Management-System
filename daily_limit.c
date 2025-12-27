@@ -3,7 +3,19 @@
 #include "structs.h"
 #include <time.h>
 int dailyLimit(int i , float withdrawAmount) {
-  
+  int flag;
+  while (1)
+  {
+        printf("1-continue\n2-return back\n");
+        printf("Enter your choice: ");
+        scanf("%d",&flag);
+        if(flag==1)
+            break;
+        else if(flag==2)
+            return 0;
+        else 
+            printf("Wrong choice try again\n");
+  }
   time_t now = time(NULL);
   struct tm *today = localtime(&now);
 

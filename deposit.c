@@ -5,7 +5,19 @@
 void deposit(){
 
   long long enteredNum;
-  int index;
+  int index,flag;
+  while (1)
+  {
+      printf("1-continue\n2-return back\n");
+      printf("Enter your choice: ");
+      scanf("%d",&flag);
+      if(flag==1)
+        break;
+      else if(flag==2)
+            return;
+      else 
+            printf("Wrong choice try again\n");
+  }
   
   //check if the acount exists or not
 while(1)

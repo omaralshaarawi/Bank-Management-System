@@ -4,7 +4,20 @@
 
 void report()
 {
+    int flag;
     long long x=-1;
+    while (1)
+    {
+        printf("1-continue\n2-return back\n");
+        printf("Enter your choice: ");
+        scanf("%d",&flag);
+        if(flag==1)
+            break;
+        else if(flag==2)
+            return;
+        else 
+            printf("Wrong choice try again\n");
+    }
     while(1)
     {
         x=search_account(1);

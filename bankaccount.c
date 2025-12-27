@@ -8,6 +8,18 @@
 void add_account(){
     customer m;
     int i=0,flag=1,k;
+    while (1)
+    {
+        printf("1-continue\n2-return back\n");
+        printf("Enter your choice: ");
+        scanf("%d",&flag);
+        if(flag==1)
+            break;
+        else if(flag==2)
+            return;
+        else 
+            printf("Wrong choice try again\n");
+    }
     while(1){
     i=0,flag=1;
     printf("enter the account number : ");
@@ -136,6 +148,18 @@ int search_account(int check){     //if check=1 return index of customer if acco
     long long x;
     while (1)
     {
+        printf("1-continue\n2-return back\n");
+        printf("Enter your choice: ");
+        scanf("%d",&flag);
+        if(flag==1)
+            break;
+        else if(flag==2)
+            return 0;
+        else 
+            printf("Wrong choice try again\n");
+    }
+    while (1)
+    {
         flag=1;
         printf("please enter the account number: ");
         scanf("%lld",&x);
@@ -178,6 +202,18 @@ int search_account(int check){     //if check=1 return index of customer if acco
 void advanced_search(){
     int i,flag;
     char k[1000];
+    while (1)
+    {
+        printf("1-continue\n2-return back\n");
+        printf("Enter your choice: ");
+        scanf("%d",&flag);
+        if(flag==1)
+            break;
+        else if(flag==2)
+            return;
+        else 
+            printf("Wrong choice try again\n");
+    }
     while (1) 
     {
         flag=0;
@@ -218,6 +254,18 @@ void advanced_search(){
 int Delete_account(int multiple){          //check if he want to delete multiple
     int x,i,k,flag;
     FILE *file1,*file2;
+    while (1)
+    {
+        printf("1-continue\n2-return back\n");
+        printf("Enter your choice: ");
+        scanf("%d",&flag);
+        if(flag==1)
+            break;
+        else if(flag==2)
+            return 0;
+        else 
+            printf("Wrong choice try again\n");
+    }
     while(1){
     if(multiple>=0)
     x=multiple;
@@ -256,7 +304,7 @@ int Delete_account(int multiple){          //check if he want to delete multiple
             if(k==1)
                 break;
             else if (k==2)
-                return;
+                return 0;
             else 
                 printf("Wrong choice please try again\n");
         }  
@@ -265,6 +313,18 @@ int Delete_account(int multiple){          //check if he want to delete multiple
 }
 void modify_account(){
     int x,i,k,flag;
+    while (1)
+    {
+        printf("1-continue\n2-return back\n");
+        printf("Enter your choice: ");
+        scanf("%d",&flag);
+        if(flag==1)
+            break;
+        else if(flag==2)
+            return;
+        else 
+            printf("Wrong choice try again\n");
+    }
     while (1)
     {
     
@@ -372,6 +432,18 @@ void modify_account(){
 }
 void delete_multipile(){
     int k,i,month,year,flag,cnt;
+    while (1)
+    {
+        printf("1-continue\n2-return back\n");
+        printf("Enter your choice: ");
+        scanf("%d",&flag);
+        if(flag==1)
+            break;
+        else if(flag==2)
+            return;
+        else 
+            printf("Wrong choice try again\n");
+    }
     printf("1-Delete by date\n2-Inactive accounts");
     while ((1))
     {
@@ -389,7 +461,7 @@ void delete_multipile(){
         printf("enter the month of date: ");
         scanf("%d",&month);
         printf("enter the year of date: ");
-        scanf("%d",year);
+        scanf("%d",&year);
         for(i=n;i>=0;--i){
             if(customers[i].open.month==month&&customers[i].open.year==year){
                     if(Delete_account(i)==-1){
