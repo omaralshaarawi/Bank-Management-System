@@ -4,16 +4,24 @@
 #include"save.c"
 #include<ctype.h>
 #include<time.h>
+#include<stdlib.h>
 void add_account(){
     customer m;
     int i=0,flag=1,k;
     while(1){
-    flag=1,i=0;
+    i=0,flag=1;
     printf("enter the account number : ");
-    scanf("%lld",&m.account_number);
+    if(scanf("%lld",&m.account_number)!=1){               //if the user put anything other than numbers
+        printf("The Account Number is Not valid please try again\n");
+        while (getchar()!='\n')
+        {
+            continue;   //clean the buffer
+        }
+        continue;
+    }                
     for(i=0;i<=n;++i){
         if(m.account_number==customers[i].account_number){
-            printf("the account number is duplicated please try other account number\n");
+            printf("the Account Number is duplicated please try to enter another account number\n");
             flag=0;
             break;
         }
@@ -41,7 +49,7 @@ void add_account(){
     }
     while (1)
     {   
-        flag=1;
+        flag=0;
         i=0;
         printf("enter your E-mail: ");
         gets(m.email);
@@ -55,9 +63,10 @@ void add_account(){
                 ++counter;
                 atpos=i;
             }
-            if(m.email[i]=='.'&&m.email[i+1]=='c'&&m.email[i+2]=='o'&&m.email[i+3]=='m')
+            if(atpos!=-1){
+            if(i>atpos&&m.email[i]=='.'&&m.email[i+1]=='c'&&m.email[i+2]=='o'&&m.email[i+3]=='m')
                 flag=1;
-
+            }
             ++i;
         }
         if(flag!=1)
@@ -67,11 +76,23 @@ void add_account(){
     }
     while (1)
     {
+        i=0,flag=1;
+        char a[1000],*end;
         printf("enter your balance: ");
-        if(scanf("%f",&m.balance)!=1)
-            printf("Invalid balance please try again\n");
-        else
+        gets(a);
+        while (a[i])
+        {
+            if(!isdigit(a[i])&&a[i]!='.'){
+            printf("Invailed Balance please try again\n");
+            flag=0;
             break;
+            }
+            ++i;
+        }
+        if(flag){
+            m.balance=atof(a);
+            break;
+        }
     }
     while (1)
     {
@@ -92,7 +113,7 @@ void add_account(){
     time_t t = time(NULL);         // Get the current time in seconds since the Unix epoch
     struct tm *currentTime = localtime(&t); // Convert to local time components
     m.open.month=currentTime->tm_mon + 1;
-    m.open.month=currentTime->tm_year+1900;
+    m.open.year=currentTime->tm_year+1900;
     strcpy(m.active,"active");
     printf("Are you sure you want to save:\n1-save\n2-cancel");
     while (1)
@@ -109,13 +130,13 @@ void add_account(){
             printf("Wrong choice please try again");
     }
 }
-int search_account(int check){
+int search_account(int check){     //if check=1 return index of customer if account is found 
     int i,flag,k;
     long long x;
     while (1)
     {
         flag=1;
-        printf("please entre the account number: ");
+        printf("please enter the account number: ");
         scanf("%lld",&x);
         for(i=0;i<=n;++i){
             if(x==customers[i].account_number){
@@ -129,7 +150,7 @@ int search_account(int check){
                 printf("Mobile: %s\n",customers[i].mobile_number);
                 printf("Date opened: %d-%d\n",customers[i].open.month,customers[i].open.year);
                 printf("Status: %s\n",customers[i].active);
-                return;
+                return 0;
             }
         }
         if(check==1)
@@ -145,7 +166,7 @@ int search_account(int check){
                 if(k==1)
                     break;
                 else if(k==2)
-                    return;
+                    return 0;
                 else
                     printf("Wrong choice please try again\n");
             }
@@ -158,23 +179,28 @@ void advanced_search(){
     char k[1000];
     while (1) 
     {
+        flag=0;
         printf("please enter the keyword: ");
-        scanf("%s",k);
+        getchar();
+        gets(k);
+        printf("Search Result: \n");
         for (i=0;i<=n;++i)
         {
             if(strstr(customers[i].name,k)){
-                printf("Search Result: \n");
-                printf("\nAccount Number: %lld",customers[i].account_number);
+                printf("\nAccount Number: %lld\n",customers[i].account_number);
                 printf("Name: %s\n",customers[i].name);
                 printf("E-mail: %s\n",customers[i].email);
                 printf("Balance: %f\n",customers[i].balance);
                 printf("Mobile: %s\n",customers[i].mobile_number);
                 printf("Date opened: %d-%d\n",customers[i].open.month,customers[i].open.year);
                 printf("Status: %s\n",customers[i].active);
-                return;
+                flag=1;
             }
         }
-        printf("Worng keyword\n1-enter another keyword\n2-cancel\n");
+        if(!flag)
+            printf("there isn't any account with tha same keyword\n1-enter another keyword\n2-cancel\n");
+        else
+            return;
         while (1)
         {
             printf("enter your choice : ");
@@ -189,8 +215,20 @@ void advanced_search(){
     }
 }
 void Delete_account(int c){
-    int x,i,k;
+    int x,i,k,flag;
     FILE *file1,*file2;
+    printf("you want to confirm the changes:\n1-confirm\n2-cancel\n");
+    while (1)
+    {
+        printf("enter your choice: ");
+        scanf("%d",&flag);
+        if(flag==1)
+            break;
+        else if (flag==2)
+            return;
+        else
+            printf("Wrong choice please try again\n");
+    }
     while(1){
     if(c==-1)
     x=search_account(1);
@@ -213,6 +251,7 @@ void Delete_account(int c){
         if(fptr==NULL)
         {
             perror("The account number file wasn't found");
+            return;
         }
         fclose(fptr);
         printf("the deletion is done successfully\n");
@@ -223,7 +262,7 @@ void Delete_account(int c){
         }
     }
     else{
-        printf("------the account number is not found-----\n1-enter another bank account\n2-cancel");
+        printf("------the account number is not found-----\n1-enter another bank account\n2-cancel\n");
         while (1)
         {
             printf("enter your choice: ");
@@ -236,7 +275,7 @@ void Delete_account(int c){
                 printf("Wrong choice please try again\n");
         }  
     }
-}
+    }
 }
 void modify_account(){
     int x,i,k,flag;
@@ -259,7 +298,7 @@ void modify_account(){
                         printf("it is an invalid name please try again\n");
                         flag=0;
                         break;
-                        }
+                    }
                     ++i;
                 }
                 if(flag)

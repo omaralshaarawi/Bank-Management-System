@@ -6,7 +6,9 @@
 #include "load.c"
 #include "prints.c"
 #include "change_status.c"
-
+#include "withdraw.c"
+#include "deposit.c"
+#include "transfer.c"
 customer customers[10007];
 int n;
 int main()
@@ -62,28 +64,28 @@ int main()
             add_account();
             break;
         case 2:
-            //delete_account();
+            Delete_account(-1);
             break;
         case 3:
-           // modify_account();
+            modify_account();
             break;
         case 4:
-           // search();
+            search_account(0);
             break;
         case 5:
-          //  advanced_search();
+            advanced_search();
             break;
         case 6:
-            //change_status();
+            changeStatus();
             break;
         case 7:
-           // withdrawl();
+           withdraw();
             break;
         case 8:
-            //deposit();
+            deposit();
             break;
         case 9:
-            //transfer_amount();
+            transfer();
             break;
         case 10:
             report();
