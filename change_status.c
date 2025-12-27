@@ -4,25 +4,18 @@
 
 void changeStatus() {
   long long enteredNum;
-  int exist = 0 ;
-  int founded;
+  int index;
 
   
   //check if the acount exists or not
-  while(!exist){
-    
-    printf("Enter the bank account number: ");
-    scanf("%lld",&enteredNum);
-        for(int i = 0 ; i < n ; i++){
-          if(enteredNum == customers[i].account_number) {
-            exist = 1;
-            founded = i;
-            break;}
-  }
-  
-  if(!exist)  printf("This account doesn't exist try again\n"); 
-            }
-
+while(1)
+    {
+        index=search_account(1);
+        if(index==-1)
+        {
+            printf("Please enter a valid bank account number\n");
+        }
+    }
   //Understand what the user wants before processing
  
   int key = -1 ;
@@ -32,35 +25,53 @@ void changeStatus() {
 }
   
   //check the account current status to avoid conflects then change it
-
+int confirmation=0;
   //activate
   if(key){
     
-    if(strcmp(customers[founded].active,"active") == 0) 
+    if(strcmp(customers[index].active,"active") == 0) {
             printf("Your account is already activated!!\n");
-              else strcpy(customers[founded].active,"active");
+            return;
+          }
+              else {
+                printf("if you want confirm to activation your account press 1 else press 0\n");
+                scanf("%d",&confirmation);
+                if(confirmation==1) strcpy(customers[index].active,"active");
+                else return;
+              }
   
   }
   //deactivate
   if(!key){
     
-    if(strcmp(customers[founded].active,"inactive") == 0) 
+    if(strcmp(customers[index].active,"inactive") == 0) {
             printf("Your account is already deactivated!!\n");
-              else strcpy(customers[founded].active,"inactive");
-  }
+            return;
+          }
+              else{ 
+                printf("if you want confirm to deactivation your account press 1 else press 0\n");
+                scanf("%d",&confirmation);
+                if(confirmation==1) strcpy(customers[index].active,"inactive");
+                else return;
+              }
+              }
+
+  //change the status in accont.txt file
+
+  save(customers[index],0);
 
   //adding changes to file
   FILE *fptr;
 char acc_number[50];
 
-  sprintf(acc_number,"%lld.txt",customers[founded].account_number);
+  sprintf(acc_number,"%lld.txt",customers[index].account_number);
     fptr = fopen(acc_number, "a");
     if (!fptr) {
     printf("Error opening file for status history.\n");
     return;
     }
 
-    fprintf(fptr,"%lld status changed into %s\n",customers[founded].account_number,customers[founded].active);
+    fprintf(fptr,"%lld status changed into %s\n",customers[index].account_number,customers[index].active);
     
     fclose(fptr);
   

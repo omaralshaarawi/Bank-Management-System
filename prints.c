@@ -7,20 +7,11 @@ void report()
     long long x=-1;
     while(1)
     {
-        printf("Please enter the bank account number : ");
-        scanf("%lld",&x);
-        int flag=1;
-        for(int i=0;i<=n;++i){
-            if(x==customers[i].account_number){
-                flag=0;
-                break;
-            }
-        }
-        if(flag)
+        x=search_account(1);
+        if(x==-1)
         {
-            printf("please enter a valid bank account number\n");
+            printf("Please enter a valid bank account number\n");
         }
-        else break;
     }
     char acc_number[50];
     sprintf(acc_number,"%lld.txt",x);

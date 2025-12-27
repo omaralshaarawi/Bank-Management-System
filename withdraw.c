@@ -6,21 +6,16 @@ void withdraw() {
   long long enteredNum;
   int exist = 0;
   int founded;
-  printf("Enter the bank account number: ");
   
   //check if the acount exists or not
-  while(!exist){
-    scanf("%lld",&enteredNum);
-  for(int i = 0 ; i < n ; i++){
-    if(enteredNum == customers[i].account_number) {
-      exist = 1;
-      founded = i;
-      break;}
-  }
-  
-  if(!exist)  printf("This account doesn't exist try again\n"); 
-     }
-
+while(1)
+    {
+        founded=search_account(1);
+        if(founded==-1)
+        {
+            printf("Please enter a valid bank account number\n");
+        }
+    }
   //check acount status
   
   if(strcmp(customers[founded].active,"inactive") == 0){
@@ -39,6 +34,7 @@ void withdraw() {
   }
   //check the dailylimit withdraw
   int key = dailyLimit(founded,withdrawAmount);
+  if(!key) return;
 
   //final process
   if(key){
