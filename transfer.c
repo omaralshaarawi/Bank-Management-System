@@ -14,6 +14,8 @@ while(1)
         {
             printf("Please enter a valid bank account number\n");
         }
+        else
+        break;
     }
 //check if the receiver exists or not
 printf("now checking receiver\n");

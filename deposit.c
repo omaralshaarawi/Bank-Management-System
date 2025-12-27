@@ -15,6 +15,7 @@ while(1)
         {
             printf("Please enter a valid bank account number\n");
         }
+        else break;
     }
 
   //check acount status
@@ -38,6 +39,8 @@ while(1)
 
   customers[founded].balance += depositAmount;
   printf("Deposit successful! Your current balance: %.2f\n",customers[founded].balance);
+
+  save(customers[founded],0);
 
  //adding changes to file
   FILE *fptr;
