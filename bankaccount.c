@@ -255,11 +255,7 @@ void Delete_account(int c){
         }
         fclose(fptr);
         printf("the deletion is done successfully\n");
-        }
-        file1=fopen("account.txt","w");
-        for(i=0;i<=n;++i){
-            fprintf(file1,"%lld,%s,%s,%f,%s,%d-%d,%s\n",customers[i].account_number,customers[i].name,customers[i].email,customers[i].balance,customers[i].mobile_number,customers[i].open.month,customers[i].open.year);
-        }
+        }       
     }
     else{
         printf("------the account number is not found-----\n1-enter another bank account\n2-cancel\n");
