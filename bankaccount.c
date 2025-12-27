@@ -240,8 +240,6 @@ void Delete_account(int c){
 }
 void modify_account(){
     int x,i,k,flag;
-    while (1)
-    {
     x=search_account(1);
     if(x>=0){
         printf("\n----modifiable option----\n");
@@ -326,5 +324,3 @@ void modify_account(){
     }
     printf("tha Account number is not found");
     }
-
-}
