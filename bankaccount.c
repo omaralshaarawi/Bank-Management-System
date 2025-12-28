@@ -54,6 +54,9 @@ void add_account(){
                 flag=0;
                 break;
             }
+            toupper(m.name[0]);
+            if(m.name[i]!=' '&&m.name[i-1]==' ')
+                toupper(m.name[i]);
             ++i;
         }
         if(flag)
@@ -220,6 +223,7 @@ void advanced_search(){
         printf("please enter the keyword: ");
         getchar();
         gets(k);
+        toupper(k[0]);
         printf("Search Result: \n");
         for (i=0;i<=n;++i)
         {
