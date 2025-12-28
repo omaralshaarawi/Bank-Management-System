@@ -2,77 +2,51 @@
 #include <stdlib.h>
 #include<string.h>
 #include "structs.h"
+<<<<<<< HEAD
 #include<string.h>
+=======
+>>>>>>> a7f88cb5b268d204bc540de20a57ff931ecf5301
 
-int login(void) {
-    char username[64];
-    char password[64];
-    ui_clear_title("LOGIN");
+int login()
+{
+    char username[20];
+    char password[20];
 
-    prompt_input("Enter username: ", username, sizeof(username));
-
-    // password masked
-    int i = 0;
-    mvprintw(getcury(stdscr), 2, "Enter password: ");
-    refresh();
-    curs_set(1);
-    noecho();
-    int ch;
-    while (1) {
-        ch = getch();
-        if (ch == '\n' || ch == '\r' || ch == KEY_ENTER) break;
-        if (ch == KEY_BACKSPACE || ch == 127 || ch == 8) {
-            if (i > 0) {
-                i--;
-                int y = getcury(stdscr);
-                int x = getcurx(stdscr);
-                if (x > 0) {
-                    move(y, x - 1);
-                    delch();
-                }
-            }
-            continue;
-        }
-        if (ch == KEY_LEFT || ch == KEY_RIGHT || ch == KEY_UP || ch == KEY_DOWN) continue;
-        if (ch >= 32 && ch <= 126 && i < (int)sizeof(password)-1) {
-            password[i++] = (char)ch;
-            addch('*');
-            refresh();
-        }
-    }
-    password[i] = '\0';
-    curs_set(0);
-    echo();
-    move(getcury(stdscr)+1, 2);
-    refresh();
+    printf("Enter username: ");
+    scanf("%s", username);
+    printf("Enter password: ");
+    scanf("%s", password);
 
     FILE *fp = fopen("users.txt", "r");
-    if (!fp) {
-        mvprintw(getcury(stdscr), 2, "users.txt not found");
-        refresh();
-        pause_msg(NULL);
+    if (!fp)
+    {
+        perror("File open failed");
         return 0;
     }
 
-    char u[128], p[128];
-    int ok = 0;
-    while (fscanf(fp, "%127s %127s", u, p) == 2) {
-        if (strcmp(u, username) == 0 && strcmp(p, password) == 0) { ok = 1; break; }
+    char word[256];
+
+    while (fscanf(fp, "%99s", word) == 1)
+    {
+        if (strcmp(word, username) == 0)
+        {
+            fscanf(fp, "%99s", word);
+            if (strcmp(word, password) == 0)
+            {
+                printf("Login successful!\n");
+                fclose(fp);
+                return 1;
+            }
+        }
+        else
+            fscanf(fp, "%99s", word);
     }
+    printf("Login failed! Invalid username or password.\n");
     fclose(fp);
-
-    if (ok) {
-        mvprintw(getcury(stdscr), 2, "Login successful");
-        refresh();
-        pause_msg(NULL);
-        return 1;
-    } else {
-        mvprintw(getcury(stdscr), 2, "Login failed");
-        refresh();
-        pause_msg(NULL);
-        return 0;
-    }
+    return 0;
 }
+
+
 void load()
 {
     FILE *fptr1;

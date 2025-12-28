@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <ncurses.h>
 #include "structs.h"
 #include "bankaccount.h"
 #include "prints.h"
