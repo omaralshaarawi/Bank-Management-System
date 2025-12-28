@@ -1,14 +1,9 @@
 #include <stdio.h>
 #include "structs.h"
 #include "bankaccount.c"
-#include "login.c"
-#include "quit.c"
-#include "load.c"
 #include "prints.c"
-#include "change_status.c"
-#include "withdraw.c"
-#include "deposit.c"
-#include "transfer.c"
+#include "menu.c"
+#include "transactions.c"
 customer customers[10007];
 int n;
 int main()
@@ -41,7 +36,7 @@ int main()
    
     while (1)
     {
-    printf("please enter the function you want to perform :\n1- ADD Account\n2- Delete Account\n3- Modify Account information \n4- Search \n5- Advanced search\n6- Change status\n7- Withdrawl\n8- Deposit\n9- Transfer amount\n10- Report\n11- Print\n12- Quit\n");
+    printf("please enter the function you want to perform :\n1- ADD Account\n2- Delete Account\n3- Modify Account information \n4- Search \n5- Advanced search\n6- Change status\n7- Withdrawl\n8- Deposit\n9- Transfer amount\n10- Report\n11- Print\n12- Quit\n13-Delete Multiple\n");
     int choice;
     printf("Please Enter your choice: ");
     scanf("%d",&choice);
@@ -82,16 +77,18 @@ int main()
             break;
         case 12:
            quit();
-        
+        case 13:
+        delete_multipile();
+        break;
         default:
             printf("Invalid choice, please try again.\n");
 
 
     }
     int k;
-    printf("1-Go Back to the menu\n2-exit the programme");
+    printf("1-Go Back to the menu\n2-exit the programme\n");
     while(1){
-        printf("enter the choice: ");
+        printf("enter your choice: ");
         scanf("%d",&k);
         if(k==1)
             break;

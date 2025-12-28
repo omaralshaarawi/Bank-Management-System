@@ -2,10 +2,6 @@
 #include <stdlib.h>
 #include<string.h>
 #include "structs.h"
-<<<<<<< HEAD
-#include<string.h>
-=======
->>>>>>> a7f88cb5b268d204bc540de20a57ff931ecf5301
 
 int login()
 {

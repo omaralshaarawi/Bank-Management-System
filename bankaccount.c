@@ -1,10 +1,50 @@
 #include"structs.h"
 #include<stdio.h>
 #include<string.h>
-#include"save.c"
 #include<ctype.h>
 #include<time.h>
 #include<stdlib.h>
+
+
+void save(customer e,int new)
+{
+    if(new==1)
+    n++;
+    if(n>=10007&&new==1)
+    {
+        n--;
+        printf("THE NUMBER OF ACCOUNTS LIMIT HAS BEEN REACHED THE ACCOUNT CANNOT BE SAVED");
+        return;
+    }
+    if(new==1){
+        customers[n].account_number=e.account_number;
+        customers[n].balance=e.balance;
+        strcpy(customers[n].name,e.name);
+        strcpy(customers[n].email,e.email);
+        customers[n].open.year=e.open.year;
+        customers[n].open.month=e.open.month;
+        strcpy(customers[n].active,e.active);
+        strcpy(customers[n].mobile_number,e.mobile_number);
+    }
+    if(new==1)
+    printf("The account has been saved successfully\n");  
+    FILE *fptr;
+    char acc_number[50];
+    sprintf(acc_number,"%lld.txt",e.account_number);
+    fptr = fopen(acc_number, "a+");
+    if(fptr==NULL)
+    {
+        perror("The account number file wasn't made");
+    }
+    fclose(fptr);
+    FILE *file1;
+     file1=fopen("accounts.txt","w");
+        for(int i=0;i<=n;++i){
+            fprintf(file1,"%lld,%s,%s,%f,%s,%d-%d,%s\n",customers[i].account_number,customers[i].name,customers[i].email,customers[i].balance,customers[i].mobile_number,customers[i].open.month,customers[i].open.year,customers[i].active);
+        }
+        fclose(file1);
+}
+
 void add_account(){
     customer m;
     int i=0,flag=1,k;
@@ -54,9 +94,9 @@ void add_account(){
                 flag=0;
                 break;
             }
-            toupper(m.name[0]);
+            m.name[0]=toupper(m.name[0]);
             if(m.name[i]!=' '&&m.name[i-1]==' ')
-                toupper(m.name[i]);
+                m.name[i]=toupper(m.name[i]);
             ++i;
         }
         if(flag)
@@ -149,7 +189,7 @@ void add_account(){
 int search_account(int check){     //if check=1 return index of customer if account is found 
     int i,flag,k;
     long long x;
-    while (1)
+    while (check==0)
     {
         printf("1-continue\n2-return back\n");
         printf("Enter your choice: ");
@@ -223,7 +263,7 @@ void advanced_search(){
         printf("please enter the keyword: ");
         getchar();
         gets(k);
-        toupper(k[0]);
+        k[0]=toupper(k[0]);
         printf("Search Result: \n");
         for (i=0;i<=n;++i)
         {
@@ -258,7 +298,7 @@ void advanced_search(){
 int Delete_account(int multiple){          //check if he want to delete multiple
     int x,i,k,flag;
     FILE *file1,*file2;
-    while (1)
+    while (multiple==-1)
     {
         printf("1-continue\n2-return back\n");
         printf("Enter your choice: ");
@@ -469,7 +509,7 @@ void delete_multipile(){
         for(i=n;i>=0;--i){
             if(customers[i].open.month==month&&customers[i].open.year==year){
                     if(Delete_account(i)==-1){
-                        printf("the Account Number of this account is :%lld\n",customers[i].account_number);
+                        printf("The Account Number of this account is :%lld\n",customers[i].account_number);
                     }
                     else{
                     flag=1;
@@ -478,10 +518,10 @@ void delete_multipile(){
             }
         }
         if(flag){
-            printf("\n--------the process of deteltion the accounts is completed------\nthe numbers of accounts that deleted is:%d",cnt);
+            printf("\n--------The process of deteltion the accounts is completed------\nthe numbers of accounts that deleted is:%d",cnt);
         }    
         else
-            printf("there is no account with the same date\n");
+            printf("There is no account with the same date that can be deleted\n");
     }
     if(k==2){
         time_t t = time(NULL);          //calculate all secondes from 1970

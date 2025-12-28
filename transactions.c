@@ -1,16 +1,23 @@
 #include <stdio.h>
 #include "structs.h"
-#include "bankaccount.h"
-#include "prints.h"
-#include "transactions.h"
 #include <time.h>
 #include <string.h>
 
 void changeStatus() {
-  long long enteredNum;
-  int index;
-
-  
+  int index,flag;
+  //to make sure that the user want to continue
+  while (1)
+    {
+        printf("1-continue\n2-return back\n");
+        printf("Enter your choice: ");
+        scanf("%d",&flag);
+        if(flag==1)
+            break;
+        else if(flag==2)
+            return;
+        else 
+            printf("Wrong choice try again\n");
+    }
   //check if the acount exists or not
 while(1)
     {
@@ -28,10 +35,10 @@ while(1)
   while(key != 0 && key != 1){
   printf("To deactivate your account press 0\nTo activate your account press 1\n");
   scanf("%d",&key);
-}
+    }
   
   //check the account current status to avoid conflects then change it
-int confirmation=0;
+int confirmation= -1;
   //activate
   if(key){
     
@@ -40,10 +47,12 @@ int confirmation=0;
             return;
           }
               else {
-                printf("if you want confirm to activation your account press 1 else press 0\n");
+                while(confirmation != 0 && confirmation != 1){
+                printf("if you want confirm the activation of your account press 1\nexit press 0\n");
                 scanf("%d",&confirmation);
                 if(confirmation==1) strcpy(customers[index].active,"active");
-                else return;
+                if(confirmation==0) return;}
+                 
               }
   
   }
@@ -54,11 +63,13 @@ int confirmation=0;
             printf("Your account is already deactivated!!\n");
             return;
           }
-              else{ 
-                printf("if you want confirm to deactivation your account press 1 else press 0\n");
+              else {
+                while(confirmation != 0 && confirmation != 1){
+                printf("if you want confirm the deactivation of your account press 1\nexit press 0\n");
                 scanf("%d",&confirmation);
                 if(confirmation==1) strcpy(customers[index].active,"inactive");
-                else return;
+                if(confirmation==0) return;}
+                 
               }
               }
 
@@ -83,6 +94,7 @@ char acc_number[50];
   
 }
 
+
 int dailyLimit(int i , float withdrawAmount) {
   
   time_t now = time(NULL);
@@ -98,22 +110,40 @@ int dailyLimit(int i , float withdrawAmount) {
     customers[i].lastwithdraw.day = today->tm_yday;
   }
 
-//check if the dailylimit
+//check if the dailylimit and the current balance
 //exceeded
 if( (customers[i].lastwithdraw.withdrawn_amount + withdrawAmount) > 50000 ){
   printf("You are only allowed to withdraw %.2f for today!\n",50000-(customers[i].lastwithdraw.withdrawn_amount));
-  return 0 ;
+  return 0;
   }
+// enough balance
+if(customers[i].balance < withdrawAmount){
+      printf("Not enough balance your current balance : %.2f\n",customers[i].balance);
+      return 0;
+    }
+  
   //can be withdrawn 1-update the daily withdrawn amount 2-return 1 to confirm the operation
   customers[i].lastwithdraw.withdrawn_amount += withdrawAmount;
-return 1 ;
+return 1;
 }
-
 
 void deposit(){
 
   long long enteredNum;
-  int index;
+  int index,flag;
+  //to make sure that the user want to continue
+  while (1)
+  {
+      printf("1-continue\n2-return back\n");
+      printf("Enter your choice: ");
+      scanf("%d",&flag);
+      if(flag==1)
+        break;
+      else if(flag==2)
+            return;
+      else 
+            printf("Wrong choice try again\n");
+  }
   
   //check if the acount exists or not
 while(1)
@@ -171,9 +201,21 @@ char acc_number[50];
 
 void withdraw() {
   long long enteredNum;
-  int exist = 0;
+  int exist = 0,flag;
   int index;
-  
+  //to make sure that the user want to continue
+    while (1)
+    {
+        printf("1-continue\n2-return back\n");
+        printf("Enter your choice: ");
+        scanf("%d",&flag);
+        if(flag==1)
+            break;
+        else if(flag==2)
+            return;
+        else 
+            printf("Wrong choice try again\n");
+    }
   //check if the acount exists or not
 while(1)
     {
@@ -207,13 +249,9 @@ while(1)
 
   //final process
   if(key){
-    if(customers[index].balance >= withdrawAmount){
       customers[index].balance -= withdrawAmount;
       printf("Withdrawal successfully! Your new balance: %.2f\n",customers[index].balance);
-    }else{
-      printf("Not enough balance your current balance : %.2f\n",customers[index].balance);
-    }
-  }
+      }
 
 
 
@@ -240,10 +278,23 @@ char acc_number[50];
 
 }
 
+
 void transfer() {
-int sender , receiver ;
-
-
+int sender , receiver,flag ,exitCheck;
+    
+//to make sure that the user want to continue
+while (1)
+    {
+        printf("1-continue\n2-return back\n");
+        printf("Enter your choice: ");
+        scanf("%d",&flag);
+        if(flag==1)
+            break;
+        else if(flag==2)
+            return;
+        else 
+            printf("Wrong choice try again\n");
+    }
 //check if the sender exists or not
 printf("now checking sender\n");
 while(1)
@@ -251,7 +302,10 @@ while(1)
         sender=search_account(1);
         if(sender==-1)
         {
-            printf("Please enter a valid bank account number\n");
+            printf("Please enter a valid bank account number\nTo exit Enter 0\n");
+            scanf("%d",&exitCheck);
+            if(exitCheck==0) break;
+
         }
         else
         break;
@@ -264,6 +318,9 @@ while(1)
         if(receiver==-1)
         {
             printf("Please enter a valid bank account number\n");
+            scanf("%d",&exitCheck);
+            if(exitCheck==0) break;
+
         }
         else break;
     }
