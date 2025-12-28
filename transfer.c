@@ -2,8 +2,10 @@
 #include <string.h>
 #include "structs.h"
 void transfer() {
-int sender , receiver,flag ;
-    while (1)
+int sender , receiver,flag ,exitCheck;
+    
+//to make sure that the user want to continue
+while (1)
     {
         printf("1-continue\n2-return back\n");
         printf("Enter your choice: ");
@@ -22,7 +24,10 @@ while(1)
         sender=search_account(1);
         if(sender==-1)
         {
-            printf("Please enter a valid bank account number\n");
+            printf("Please enter a valid bank account number\nTo exit Enter 0\n");
+            scanf("%d",&exitCheck);
+            if(exitCheck==0) break;
+
         }
         else
         break;
@@ -35,6 +40,9 @@ while(1)
         if(receiver==-1)
         {
             printf("Please enter a valid bank account number\n");
+            scanf("%d",&exitCheck);
+            if(exitCheck==0) break;
+
         }
         else break;
     }

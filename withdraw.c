@@ -6,6 +6,7 @@ void withdraw() {
   long long enteredNum;
   int exist = 0,flag;
   int index;
+  //to make sure that the user want to continue
     while (1)
     {
         printf("1-continue\n2-return back\n");
@@ -51,13 +52,9 @@ while(1)
 
   //final process
   if(key){
-    if(customers[index].balance >= withdrawAmount){
       customers[index].balance -= withdrawAmount;
       printf("Withdrawal successfully! Your new balance: %.2f\n",customers[index].balance);
-    }else{
-      printf("Not enough balance your current balance : %.2f\n",customers[index].balance);
-    }
-  }
+      }
 
 
 

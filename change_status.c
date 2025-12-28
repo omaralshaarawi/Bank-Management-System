@@ -5,6 +5,7 @@
 void changeStatus() {
   long long enteredNum;
   int index,flag;
+  //to make sure that the user want to continue
   while (1)
     {
         printf("1-continue\n2-return back\n");
@@ -34,10 +35,10 @@ while(1)
   while(key != 0 && key != 1){
   printf("To deactivate your account press 0\nTo activate your account press 1\n");
   scanf("%d",&key);
-}
+    }
   
   //check the account current status to avoid conflects then change it
-int confirmation=0;
+int confirmation= -1;
   //activate
   if(key){
     
@@ -46,10 +47,12 @@ int confirmation=0;
             return;
           }
               else {
-                printf("if you want confirm to activation your account press 1 else press 0\n");
+                while(confirmation != 0 && confirmation != 1){
+                printf("if you want confirm the activation of your account press 1\nexit press 0\n");
                 scanf("%d",&confirmation);
                 if(confirmation==1) strcpy(customers[index].active,"active");
-                else return;
+                if(confirmation==0) return;}
+                 
               }
   
   }
@@ -60,11 +63,13 @@ int confirmation=0;
             printf("Your account is already deactivated!!\n");
             return;
           }
-              else{ 
-                printf("if you want confirm to deactivation your account press 1 else press 0\n");
+              else {
+                while(confirmation != 0 && confirmation != 1){
+                printf("if you want confirm the deactivation of your account press 1\nexit press 0\n");
                 scanf("%d",&confirmation);
                 if(confirmation==1) strcpy(customers[index].active,"inactive");
-                else return;
+                if(confirmation==0) return;}
+                 
               }
               }
 

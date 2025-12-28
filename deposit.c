@@ -6,6 +6,7 @@ void deposit(){
 
   long long enteredNum;
   int index,flag;
+  //to make sure that the user want to continue
   while (1)
   {
       printf("1-continue\n2-return back\n");

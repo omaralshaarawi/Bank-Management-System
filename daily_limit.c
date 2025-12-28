@@ -3,19 +3,7 @@
 #include "structs.h"
 #include <time.h>
 int dailyLimit(int i , float withdrawAmount) {
-  int flag;
-  while (1)
-  {
-        printf("1-continue\n2-return back\n");
-        printf("Enter your choice: ");
-        scanf("%d",&flag);
-        if(flag==1)
-            break;
-        else if(flag==2)
-            return 0;
-        else 
-            printf("Wrong choice try again\n");
-  }
+  
   time_t now = time(NULL);
   struct tm *today = localtime(&now);
 
@@ -29,15 +17,21 @@ int dailyLimit(int i , float withdrawAmount) {
     customers[i].lastwithdraw.day = today->tm_yday;
   }
 
-//check if the dailylimit
+//check if the dailylimit and the current balance
 //exceeded
 if( (customers[i].lastwithdraw.withdrawn_amount + withdrawAmount) > 50000 ){
   printf("You are only allowed to withdraw %.2f for today!\n",50000-(customers[i].lastwithdraw.withdrawn_amount));
-  return 0 ;
+  return 0;
   }
+// enough balance
+if(customers[i].balance < withdrawAmount){
+      printf("Not enough balance your current balance : %.2f\n",customers[i].balance);
+      return 0;
+    }
+  
   //can be withdrawn 1-update the daily withdrawn amount 2-return 1 to confirm the operation
   customers[i].lastwithdraw.withdrawn_amount += withdrawAmount;
-return 1 ;
+return 1;
 }
 
 
