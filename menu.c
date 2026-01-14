@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include<string.h>
 #include "structs.h"
-
+#define RED     "\033[1;31m"
+#define GREEN   "\033[1;32m"
+#define YELLOW  "\033[1;33m"
+#define RESET   "\033[0m"
 int login()
 {
     char username[20];
@@ -10,7 +13,7 @@ int login()
 
     printf("Enter username: ");
     scanf("%s", username);
-    printf("Enter password: ");
+    printf( "Enter password: " RESET);
     scanf("%s", password);
 
     FILE *fp = fopen("users.txt", "r");
@@ -29,7 +32,7 @@ int login()
             fscanf(fp, "%99s", word);
             if (strcmp(word, password) == 0)
             {
-                printf("Login successful!\n");
+                printf(GREEN "Login successful!\n" );
                 fclose(fp);
                 return 1;
             }

@@ -70,7 +70,18 @@ void add_account(){
             continue;   //clean the buffer
         }
         continue;
-    }                
+    }
+    long long r=m.account_number,cnt=0;
+    while(r)
+    {
+        cnt++;
+        r/=10;
+    }         
+    if(cnt!=10)
+    {
+        printf("The Account Number is Not valid please try again\n");
+        continue;
+    }       
     for(i=0;i<=n;++i){
         if(m.account_number==customers[i].account_number){
             printf("the Account Number is duplicated please try to enter another account number\n");
@@ -321,7 +332,6 @@ int Delete_account(int multiple){          //check if he want to delete multiple
             printf("the deletion is rejected because the account contain money\n");
             return -1;
         }
-        --n;
         FILE *fptr;
         char acc_number[50];
         sprintf(acc_number,"%lld.txt",customers[x].account_number);
@@ -329,8 +339,12 @@ int Delete_account(int multiple){          //check if he want to delete multiple
             printf("file is not found\n");
             return -1;
         }
+        for(i=x;i<=n;++i){
+            customers[i]=customers[i+1];
+        }
+        --n;
         save(customers[x],0);
-        if(multiple>0)
+        if(multiple>=0)
             return 0;
         if (multiple==-1)
         {

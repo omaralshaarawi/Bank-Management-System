@@ -4,17 +4,29 @@
 #include "prints.c"
 #include "menu.c"
 #include "transactions.c"
+#define RED     "\033[1;31m"
+#define GREEN   "\033[1;32m"
+#define YELLOW  "\033[1;33m"
+#define RESET   "\033[0m
 customer customers[10007];
 int n;
 int main()
 {
-    printf("Welcome to the Bank Management System\n");
+    printf(RED "Welcome to the Bank Management System\n");
     printf("Please login to continue\n or Quit\n");
     while(1)
     {
         printf("1- Login\n2- Quit\n");
         int choice;
-        scanf("%d",&choice);
+        if(scanf("%d",&choice)!=1)
+        {
+            printf("Invalid Try again\n");
+            while (getchar()!='\n')
+            {
+                continue;   //clean the buffer
+            }
+            continue;
+        }
         if(choice==1)
         {
             if(login())
